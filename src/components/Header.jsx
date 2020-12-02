@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import profileLogo from "../profile.svg";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -11,7 +10,7 @@ const HeaderContainer = styled.header`
 `;
 
 const Huno = styled.h1`
-  font-size: 10vw;
+  font-size: ${(props) => (props.isSearchResults ? "5vw" : "8vw")};
   background: -webkit-linear-gradient(
     180deg,
     rgba(255, 0, 0, 1) 0%,
@@ -26,45 +25,24 @@ const Huno = styled.h1`
     "Lucida Sans", Arial, sans-serif;
   font-weight: bolder;
   width: 100%;
-  margin-top: 20vh;
+  margin-top: ${(props) => (props.isSearchResults ? "2vh" : "20vh")};
   margin-bottom: 0;
+  margin-left: 10px;
   text-align: center;
-  /* border: 1px red solid; */
 
   @media (min-width: 990px) {
-    font-size: 6rem;
     /* margin-top: 10vh; */
   }
 
   @media (max-width: 990px) {
-    /* font-size: 6rem; */
-    margin-top: 8vh;
+    font-size: ${(props) => (props.isSearchResults ? "6vw" : "12vw")};
   }
 `;
 
-const ProfileLogoImg = styled.img`
-  width: 7vw;
-  height: 6vw;
-  min-width: 1rem;
-  min-height: 1rem;
-  text-align: right;
-  @media (min-width: 990px) {
-    max-height: 4rem;
-    max-width: 4rem;
-  }
-`;
-
-const ProfileContainer = styled.div`
-  padding: 0.5rem;
-`;
-
-const Header = ({ title }) => {
+const Header = ({ title, isSearchResults }) => {
   return (
-    <HeaderContainer>
-      <ProfileContainer>
-        {/* <ProfileLogoImg src={profileLogo} /> */}
-      </ProfileContainer>
-      <Huno>{title}</Huno>
+    <HeaderContainer isSearchResults={isSearchResults}>
+      <Huno isSearchResults={isSearchResults}>{title}</Huno>
     </HeaderContainer>
   );
 };
