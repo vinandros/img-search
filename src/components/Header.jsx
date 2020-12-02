@@ -3,16 +3,11 @@ import styled from "@emotion/styled";
 import profileLogo from "../profile.svg";
 
 const HeaderContainer = styled.header`
-  border: 1px black solid;
-  margin: 2px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
   align-items: flex-end;
-
-  @media (max-width: 990px) {
-  }
 `;
 
 const Huno = styled.h1`
@@ -34,10 +29,16 @@ const Huno = styled.h1`
   margin-top: 20vh;
   margin-bottom: 0;
   text-align: center;
-  border: 1px red solid;
+  /* border: 1px red solid; */
 
   @media (min-width: 990px) {
     font-size: 6rem;
+    /* margin-top: 10vh; */
+  }
+
+  @media (max-width: 990px) {
+    /* font-size: 6rem; */
+    margin-top: 8vh;
   }
 `;
 
@@ -61,7 +62,7 @@ const Header = ({ title }) => {
   return (
     <HeaderContainer>
       <ProfileContainer>
-        <ProfileLogoImg src={profileLogo} />
+        {/* <ProfileLogoImg src={profileLogo} /> */}
       </ProfileContainer>
       <Huno>{title}</Huno>
     </HeaderContainer>
