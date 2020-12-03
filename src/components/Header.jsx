@@ -30,19 +30,32 @@ const Huno = styled.h1`
   margin-left: 10px;
   text-align: center;
 
-  @media (min-width: 990px) {
-    /* margin-top: 10vh; */
-  }
-
   @media (max-width: 990px) {
     font-size: ${(props) => (props.isSearchResults ? "6vw" : "12vw")};
   }
 `;
 
-const Header = ({ title, isSearchResults }) => {
+const ALink = styled.a`
+  cursor: pointer;
+`;
+
+const Header = ({
+  title,
+  isSearchResults,
+  setIsSearchResults,
+  setSearchTerm,
+}) => {
+  const handleClick = () => {
+    setIsSearchResults(false);
+    setSearchTerm("");
+    window.location.href = "/";
+  };
+
   return (
     <HeaderContainer isSearchResults={isSearchResults}>
-      <Huno isSearchResults={isSearchResults}>{title}</Huno>
+      <ALink onClick={handleClick}>
+        <Huno isSearchResults={isSearchResults}>{title}</Huno>
+      </ALink>
     </HeaderContainer>
   );
 };

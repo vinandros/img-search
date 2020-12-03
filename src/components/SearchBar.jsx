@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import getFullApiUrl from "../helpers/buildApiUrl";
 
 const InputField = styled.input`
   width: 100%;
@@ -30,7 +31,6 @@ const SubmitBottom = styled.button`
   }
 
   @media (max-width: 990px) {
-    /* height: 2rem; */
     display: ${(props) => (props.isSearchResults ? "none" : "")};
     margin-top: 1rem;
     width: 50%;
@@ -57,19 +57,76 @@ const Form = styled.form`
   }
 `;
 
-const SearchBar = ({ isSearchResults, setIsSearchResults }) => {
-  const handleSubmit = (e) => {
+const SearchBar = ({
+  isSearchResults,
+  setIsSearchResults,
+  setResultImages,
+  setLoading,
+  currentPage,
+  setTotalPages,
+  setCurrentPage,
+  searchTerm,
+  setSearchTerm,
+}) => {
+  const [searchTermChange, setSearchTermChange] = React.useState("");
+  const [error, setError] = React.useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isSearchResults) {
-      setIsSearchResults(false);
-    } else {
-      setIsSearchResults(true);
+
+    if (searchTermChange === "") {
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+      return;
     }
+    if (searchTermChange !== searchTerm) {
+      setCurrentPage(1);
+    }
+
+    setSearchTerm(searchTermChange);
   };
+
+  React.useEffect(() => {
+    if (searchTerm === "") {
+      return;
+    }
+    const APIRequest = async (searchTerm, currentPage) => {
+      const url = getFullApiUrl(searchTerm, currentPage);
+      try {
+        const res = await fetch(url);
+        const result = await res.json();
+        setLoading(true);
+        setResultImages(result.hits);
+        setTotalPages(
+          Math.ceil(result.totalHits / process.env.REACT_APP_PAGINATION_LENGTH)
+        );
+        setIsSearchResults(true);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    APIRequest(searchTerm, currentPage);
+  }, [
+    searchTerm,
+    currentPage,
+    setLoading,
+    setIsSearchResults,
+    setTotalPages,
+    setResultImages,
+  ]);
 
   return (
     <Form isSearchResults={isSearchResults} onSubmit={handleSubmit}>
-      <InputField type="text" />
+      <InputField
+        type="text"
+        onChange={(e) => setSearchTermChange(e.target.value)}
+        placeholder={error ? "Please enter a search term." : ""}
+      />
       <SubmitBottom isSearchResults={isSearchResults} type="submit">
         Search
       </SubmitBottom>

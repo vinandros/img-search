@@ -8,6 +8,7 @@ const FooterCotainer = styled.footer`
   margin: 0px;
   padding: 0px;
   flex-wrap: wrap;
+  background-color: #c2c2c2;
 `;
 
 const PCopyright = styled.p`
