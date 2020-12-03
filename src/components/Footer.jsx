@@ -24,7 +24,12 @@ const Footer = () => {
   return (
     <FooterCotainer>
       <PCopyright>&copy; Copyright - Kevin Alvarado Varela.</PCopyright>
-      <PCopyright>All data get it from</PCopyright>
+      <PCopyright>
+        All data get it from{" "}
+        <a href="https://pixabay.com" target="_blank">
+          pixabay.com
+        </a>
+      </PCopyright>
     </FooterCotainer>
   );
 };
