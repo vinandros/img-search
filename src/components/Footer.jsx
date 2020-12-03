@@ -26,7 +26,7 @@ const Footer = () => {
       <PCopyright>&copy; Copyright - Kevin Alvarado Varela.</PCopyright>
       <PCopyright>
         All data get it from{" "}
-        <a href="https://pixabay.com" target="_blank">
+        <a href="https://pixabay.com" rel="noreferrer" target="_blank">
           pixabay.com
         </a>
       </PCopyright>
